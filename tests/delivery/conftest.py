@@ -1,7 +1,9 @@
 from datetime import date
 
 import pytest
+from holidays import country_holidays
 from holidays.countries import BR
+from holidays.holiday_base import HolidayBase
 
 
 class CustonNordesteCalendar(BR):
@@ -12,5 +14,11 @@ class CustonNordesteCalendar(BR):
 
 
 @pytest.fixture(scope="module")
-def holidays_base():
-    return CustonNordesteCalendar()
+def default_holidays():
+    calendar = country_holidays("BR")
+    return calendar
+
+
+@pytest.fixture(scope="module")
+def custon_holidays(default_holidays):
+    return default_holidays + CustonNordesteCalendar()
