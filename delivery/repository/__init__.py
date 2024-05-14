@@ -1,0 +1,1 @@
+from .veichile_repository import VeichileRepository
