@@ -8,7 +8,6 @@ from delivery import EstimativeDeliveryService
 _test = TestCase()
 
 
-@pytest.mark.delivery
 def test_calculate_delivery_in_ordinary_day_with_default_calendar(default_holidays):
     service = EstimativeDeliveryService(default_holidays)
     result = service.estimate_delivery(date(2024, 5, 10), 5, 8)
@@ -23,7 +22,6 @@ def test_calculate_delivery_in_ordinary_day_with_default_calendar(default_holida
         _test.assertIn(item, _expcted_result)
 
 
-@pytest.mark.delivery
 def test_calculate_delivery_in_ordinary_day_with_custon_calendar(custon_holidays):
     service = EstimativeDeliveryService(custon_holidays)
     result = service.estimate_delivery(date(2024, 5, 10), 5, 8)
@@ -38,7 +36,6 @@ def test_calculate_delivery_in_ordinary_day_with_custon_calendar(custon_holidays
         _test.assertIn(item, _expcted_result)
 
 
-@pytest.mark.delivery
 def test_calculate_delivery_in_special_holidays_with_default_calendar(
     default_holidays,
 ):
@@ -55,7 +52,6 @@ def test_calculate_delivery_in_special_holidays_with_default_calendar(
         _test.assertIn(item, _expcted_result)
 
 
-@pytest.mark.delivery
 def test_calculate_delivery_in_special_holidays_with_custon_calendar(custon_holidays):
     service = EstimativeDeliveryService(custon_holidays)
     result = service.estimate_delivery(date(2024, 6, 20), 5, 8)

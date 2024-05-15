@@ -1,12 +1,12 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 
 
 class VeichileStatus(Enum):
-    AVALIABLE = 1
+    AVAILABLE = 1
     BUZY = 2
-    UNAVALIABLE = 0
+    UNAVAILABLE = 0
 
 
 @dataclass(frozen=True, order=True)
@@ -14,5 +14,5 @@ class VeichileModel:
     id: int
     plate: str
     status: VeichileStatus
-    created_at: datetime
-    updated_at: datetime
+    created_at: datetime = field(default_factory=datetime.now)
+    updated_at: datetime = field(default_factory=datetime.now)

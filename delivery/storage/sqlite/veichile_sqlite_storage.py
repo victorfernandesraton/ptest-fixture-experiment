@@ -20,8 +20,17 @@ class VeichileStorageSqlite(VeichileRepository):
                     plate TEXT NOT NULL UNIQUE,
                     status INT NOT NULL DEFAULT 1,
                     created_at NUMERIC,
-                    updated_at NUMERIC,
+                    updated_at NUMERIC
                 )
+                """
+            )
+
+    def drop_table(self):
+        with self.conn:
+            cursor = self.conn.cursor()
+            cursor.execute(
+                f"""
+                DROP TABLE {self.table_name}
                 """
             )
 
@@ -52,12 +61,15 @@ class VeichileStorageSqlite(VeichileRepository):
             if cursor.rowcount == 0:
                 return None
             row = cursor.fetchone()
+            if not row:
+                return None
+            print(row)
             return VeichileModel(
                 id=row[0],
                 plate=row[1],
                 status=VeichileStatus(row[2]),
-                created_at=datetime.fromisoformat(row[3]),
-                updated_at=datetime.fromisoformat(row[4]),
+                created_at=datetime.fromtimestamp(row[3]),
+                updated_at=datetime.fromtimestamp(row[4]),
             )
 
     def update_veichile_status(
@@ -68,7 +80,7 @@ class VeichileStorageSqlite(VeichileRepository):
         if not old_veichile:
             return None
 
-        now = datetime.now().isoformat()
+        now = datetime.now().timestamp()
         with self.conn:
             cursor = self.conn.cursor()
             cursor.execute(
